@@ -1,0 +1,38 @@
+{% extends "./base.html" %}
+
+{% block title %}Editar Empresa{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h2>Edicion de Empresa</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form action="/editarEmpresa/" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" id="txtid" name="txtid" value={{empresa.id}} class="form-control" placeholder="Id" 
+                                minlength="1" maxlength="5" required readonly>
+                        <input type="text" id="txtnombre" name="txtnombre" value={{empresa.nombre}} class="form-control mt-2" placeholder="Cliente" 
+                                minlength="1" maxlength="50" required>
+                        <input type="text" id="txtnit" name="txtnit" value={{empresa.nit}} class="form-control mt-2" placeholder="Nit" 
+                                minlength="1" maxlength="50" required>
+                        <input type="text" id="txtemail" name="txtemail" value={{empresa.email}} class="form-control mt-2" placeholder="Email" 
+                                minlength="2" maxlength="50" required>
+                        <input type="text" id="txttelefono" name="txttelefono" value={{empresa.telefono}} class="form-control mt-2" placeholder="Telefono" 
+                                min="1" max="20" required>
+                        <input type="text" id="txtobservacion" name="txtobservacion" value={{empresa.observacion}} class="form-control mt-2 py-4" placeholder="Observacion" 
+                                min="1" max="250" required>
+                        <input type="text" id="txtestado" name="txtestado" value={{empresa.estado}} class="form-control mt-2" placeholder="Estado" 
+                                minlength="1" maxlength="1" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block text-white mt-3">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

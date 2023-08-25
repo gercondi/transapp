@@ -1,0 +1,82 @@
+{% extends "./base.html" %}
+{%block title %}Gestion de Tarifas{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong class="text-dark">{{message}}</strong>
+                </div>
+            {% endfor %}
+        {% endif%}
+        <h2>Gestion de Empresas</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/crearEmpresa/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtid" name="txtid" class="form-control" placeholder="Id" 
+                                minlength="1" maxlength="5" required>
+                        <input type="text" id="txtnombre" name="txtnombre" class="form-control mt-2" placeholder="Cliente" 
+                                minlength="1" maxlength="50" required>
+                        <input type="text" id="txtnit" name="txtnit" class="form-control mt-2" placeholder="Nit" 
+                                minlength="1" maxlength="50" required>
+                        <input type="text" id="txtemail" name="txtemail" class="form-control mt-2" placeholder="Email" 
+                                minlength="2" maxlength="50" required>
+                        <input type="text" id="txttelefono" name="txttelefono" class="form-control mt-2" placeholder="Telefono" 
+                                min="1" max="20" required>
+                        <input type="text" id="txtobservacion" name="txtobservacion" class="form-control mt-2 py-4" placeholder="Observacion" 
+                                min="1" max="250" required>
+                        <input type="text" id="txtestado" name="txtestado" class="form-control mt-2" placeholder="Estado" 
+                                minlength="1" maxlength="1" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>Listado de Empresas</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Empresa</th>
+                        <th>Nit</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>Observacion</th>
+                        <th>Estado</th>
+                        <th colspan="">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in empresas %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{e.id}}</td>
+                            <td>{{e.nombre}}</td>
+                            <td>{{e.nit}}</td>
+                            <td>{{e.email}}</td>
+                            <td>{{e.telefono}}</td>
+                            <td>{{e.observacion}}</td>
+                            <td>{{e.estado}}</td>
+                            <td><a href="/edicionEmpresa/{{e.id}}" class="btn btn-info">Editar</a></td>
+                            <td><a href="/eliminarEmpresa/{{e.id}}" class="btn btn-danger btnEliminar">Eliminar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

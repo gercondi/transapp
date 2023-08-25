@@ -1,0 +1,71 @@
+{% extends "./base.html" %}
+
+{% block title %}Nuevo Servicio{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <h2>Crear Servicio</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form action="/crearServicio/" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" id="txtid" name="txtid" class="form-control mt-2" placeholder="codigo" 
+                                    minlength="1" maxlength="5" required>
+                            <input type="text" id="txtfecha" name="txtfecha" class="form-control mt-2" placeholder="cliente" 
+                                    minlength="1" maxlength="50" required>
+                            <input type="text" id="txthora" name="txthora" class="form-control mt-2" placeholder="zona" 
+                                    minlength="1" maxlength="50" required>
+
+                            <!-- Carga los tipos de Servicios, del diccionario creado en model -->
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Tipo de Servicio</label>
+                                <select class="form-select" id="idTiposerv">
+                                    <option selected>Seleccione...</option>
+                                    <option value="1">ENTRADA</option>
+                                    <option value="2">SALIDA</option>
+                                    <option value="3">OTRO</option>
+                                </select>
+                            </div>
+                          <!--  <input type="text" id="txtservicio" name="txtservicio" class="form-control mt-2" placeholder="servicio" 
+                                    minlength="2" maxlength="50" required> -->
+
+                          <!--  <input type="text" id="txtcliente" name="txtcliente" class="form-control mt-2" placeholder="cliente" 
+                                    minlength="1" maxlength="50" required> -->
+                            
+                        <!-- Carga los Clientes asociados a la Empresa -->
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Cliente</label>
+                                <select class="form-select" id="idCliente">
+                                    <option selected>Seleccione...</option>
+                                    {% for c in clientes %}
+                                        <option value="{{ c.id }}">{{ c.nombre }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <input type="text" id="txtzona" name="txtzona" class="form-control mt-2" placeholder="zona" 
+                                    minlength="1" maxlength="50"  required>
+                            <input type="text" id="txtplaca" name="txtplaca" class="form-control mt-2" placeholder="placa" 
+                                    minlength="1" maxlength="50"  required>
+                            <input type="text" id="txtconductor" name="txtconductor" class="form-control mt-2" placeholder="conductor" 
+                                    minlength="1" maxlength="50"  required>
+                            <input type="text" id="txtorigen" name="txtorigen" class="form-control mt-2" placeholder="origen" 
+                                    minlength="1" maxlength="50"  required>
+                            <input type="text" id="txtdestino" name="txtdestino" class="form-control mt-2" placeholder="destino" 
+                                    minlength="1" maxlength="50"  required>
+                            <input type="text" id="txtusuarios" name="txtusuarios" class="form-control mt-2" placeholder="usuarios" 
+                                    minlength="1" maxlength="50"  required>
+                            <input type="text" id="txtestado" name="txtestado" class="form-control mt-2" placeholder="estado" 
+                                    minlength="1" maxlength="50"  required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block text-white mt-3">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "./base.html" %}
+{%block title %}Gestion de Operaciones{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="container">
+        <nav class="navbar navbar-dark bg-dark">
+            <form class="container-fluid justify-content-start">
+              <a class="btn btn-outline-success me-2" href="/cargarServicio/1">Nuevo</a>
+              <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button>
+            </form>
+          </nav>
+        <div class="col-sm-12">
+        <h2>Programacion</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Servicio</th>
+                        <th>Cliente</th>
+                        <th>Zona</th>
+                        <th>Placa</th>
+                        <th>Conductor</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Usuarios</th>
+                        <th>Estado</th>
+                        <th colspan="">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in servicios %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{s.id}}</td>
+                            <td>{{s.fecha}}</td>
+                            <td>{{s.hora}}</td>
+                            <td>{{s.tipo_servicio}}</td>
+                            <td>{{s.cliente}}</td>
+                            <td>{{s.zona}}</td>
+                            <td>{{s.placa}}</td>
+                            <td>{{s.conductor}}</td>
+                            <td>{{s.origen}}</td>
+                            <td>{{s.destino}}</td>
+                            <td>{{s.usuarios}}</td>
+                            <td>{{s.estado}}</td>
+                            <td><a href="/enviarServicio/{{s.id}}" class="btn btn-info">Enviar</a></td>
+                            <td><a href="/edicionServicio/{{s.id}}" class="btn btn-danger btnEliminar">Editar</a></td>
+                            <td><a href="/enviarServicio/{{s.id}}" class="btn btn-danger btnEliminar">Cancelar</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
