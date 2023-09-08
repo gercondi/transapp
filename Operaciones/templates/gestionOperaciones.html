@@ -6,8 +6,8 @@
     <div class="container">
         <nav class="navbar navbar-dark bg-dark">
             <form class="container-fluid justify-content-start">
-              <a class="btn btn-outline-success me-2" href="/cargarServicio/1">Nuevo</a>
-              <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button>
+              <a class="btn btn-outline-success me-2" href="/cargarServicio/">Nuevo</a>
+              <a class="btn btn-outline-success me-2" href="#">Otra</a>
             </form>
           </nav>
         <div class="col-sm-12">
@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for s in servicios %}
+                    {% for s in operaciones %}
                         <tr>
                             <td>{{forloop.counter}}</td>
                             <td>{{s.id}}</td>

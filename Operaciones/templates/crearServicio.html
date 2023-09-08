@@ -4,51 +4,78 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-4 offset-md-4">
+        <div class="container">
             <h2>Crear Servicio</h2>
             <div class="card">
-                <div class="card-body">
-                    <form action="/crearServicio/" method="POST">{% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" id="txtid" name="txtid" class="form-control mt-2" placeholder="codigo" 
-                                    minlength="1" maxlength="5" required>
-                            <input type="text" id="txtfecha" name="txtfecha" class="form-control mt-2" placeholder="cliente" 
+               <div class="card-body"> 
+                    <form class="row g-3" action="/crearServicio/" method="POST">{% csrf_token %}
+                        
+                            <div class="col-md-6">
+                                <label for="inputEmail4" class="form-label">Fecha</label>
+                                <input type="text" id="txtfecha" name="txtfecha" class="form-control mt-2" placeholder="Fecha" 
                                     minlength="1" maxlength="50" required>
-                            <input type="text" id="txthora" name="txthora" class="form-control mt-2" placeholder="zona" 
-                                    minlength="1" maxlength="50" required>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="inputPassword4" class="form-label">Hora</label>
+                                <input type="text" id="txthora" name="txthora" class="form-control mt-2" placeholder="zona" 
+                                minlength="1" maxlength="50" required>
+                              </div>
 
                             <!-- Carga los tipos de Servicios, del diccionario creado en model -->
-                            <div class="input-group mb-3">
+                            <div class="input-group mb-2">
                                 <label class="input-group-text" for="inputGroupSelect01">Tipo de Servicio</label>
-                                <select class="form-select" id="idTiposerv">
+                                <select class="form-select" id="idTiposerv" name="idTiposerv" required>
                                     <option selected>Seleccione...</option>
                                     <option value="1">ENTRADA</option>
                                     <option value="2">SALIDA</option>
                                     <option value="3">OTRO</option>
                                 </select>
                             </div>
-                          <!--  <input type="text" id="txtservicio" name="txtservicio" class="form-control mt-2" placeholder="servicio" 
-                                    minlength="2" maxlength="50" required> -->
-
-                          <!--  <input type="text" id="txtcliente" name="txtcliente" class="form-control mt-2" placeholder="cliente" 
-                                    minlength="1" maxlength="50" required> -->
+                          
                             
                         <!-- Carga los Clientes asociados a la Empresa -->
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Cliente</label>
-                                <select class="form-select" id="idCliente">
+                                <select class="js-example-basic-single" id="idCliente" name="idCliente">
+                                <!--<select class="form-select" id="idCliente" name="idCliente" required>-->
                                     <option selected>Seleccione...</option>
                                     {% for c in clientes %}
                                         <option value="{{ c.id }}">{{ c.nombre }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                            <input type="text" id="txtzona" name="txtzona" class="form-control mt-2" placeholder="zona" 
-                                    minlength="1" maxlength="50"  required>
-                            <input type="text" id="txtplaca" name="txtplaca" class="form-control mt-2" placeholder="placa" 
-                                    minlength="1" maxlength="50"  required>
-                            <input type="text" id="txtconductor" name="txtconductor" class="form-control mt-2" placeholder="conductor" 
-                                    minlength="1" maxlength="50"  required>
+
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="inputGroupSelect01">Zona</label>
+                                <select class="form-select" id="idCliente" name="idCliente" required>
+                                    <option selected>Seleccione...</option>
+                                    {% for z in zonas %}
+                                        <option value="{{ z.id }}">{{ z.zona }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                         
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="idPlacaSelect">Placa</label>
+                                <select class="form-select" id="idPlacaSelect" name="idPlacaSelect" required>
+                                    <option selected>Seleccione...</option>
+                                    {% for p in placas %}
+                                        <option value="{{ p.id }}">{{ p.placa }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+        
+                            <div class="input-group mb-6">
+                                <label class="input-group-text" for="inputGroupSelect01">Conductor</label>
+                                <input type="text" id="txtconductor" name="txtconductor" class="form-control mt-2" 
+                                    minlength="1" maxlength="50" readonly>
+                            </div>
+                            <div class="input-group mb-6">
+                                <label class="input-group-text" for="inputGroupSelect01">Propietario</label>
+                                <input type="text" id="txtpropietario" name="txtpropietario" class="form-control mt-2"  
+                                    minlength="1" maxlength="50" readonly>
+                            </div>
+                            
                             <input type="text" id="txtorigen" name="txtorigen" class="form-control mt-2" placeholder="origen" 
                                     minlength="1" maxlength="50"  required>
                             <input type="text" id="txtdestino" name="txtdestino" class="form-control mt-2" placeholder="destino" 
@@ -57,7 +84,7 @@
                                     minlength="1" maxlength="50"  required>
                             <input type="text" id="txtestado" name="txtestado" class="form-control mt-2" placeholder="estado" 
                                     minlength="1" maxlength="50"  required>
-                        </div>
+                        
                         <div class="form-group">
                             <button type="submit" class="btn btn-success btn-block text-white mt-3">Guardar</button>
                         </div>
@@ -68,4 +95,34 @@
         </div>
 
     </div>
+{% endblock %}
+{% block js_page %}
+    <script type="text/javascript">
+        // Función para actualizar los campos de pasaporte y ciudad
+        const licensePlateSelect = document.getElementById("idPlacaSelect");
+        const ownerField = document.getElementById("txtpropietario");
+        const driverField = document.getElementById("txtconductor");
+
+        licensePlateSelect.addEventListener("change", function () {
+            const selectedLicensePlate = licensePlateSelect.value;
+            alert(selectedLicensePlate);
+            // Realiza una solicitud AJAX para obtener los datos del vehículo seleccionado
+            // desde Django y luego actualiza los campos de propietario y conductor.
+            // Puedes usar Fetch API o jQuery.ajax para realizar la solicitud.
+
+            // Ejemplo con Fetch API:
+            fetch(`/get_vehicle_info/?license_plate=${selectedLicensePlate}`)
+                .then(response => response.json())
+                .then(data => {
+                    ownerField.value = data.owner;
+                    driverField.value = data.driver;
+                })
+                .catch(error => console.error(error));
+        });
+        // Agregar un event listener al select para actualizar la información del conductor
+        document.getElementById("idPlacaSelect").addEventListener("change", updatePlacaInfo);
+
+        // Llamar a la función inicialmente para llenar los campos con el primer conductor
+        updatePlacaInfo();
+    </script>
 {% endblock %}

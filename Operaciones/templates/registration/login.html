@@ -1,16 +1,28 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
 {% block title %}Inicio{% endblock %}
 
+
 {% block body %}
+    
     <h3>LOGIN TRANSAPP</h3>
     <br>
     <form action="" method="post">
         {% csrf_token %}
-        <input type="text" name="username" id="" placeholder="Nombre de Usuario">
+       <!-- <input type="text" name="username" id="" placeholder="Nombre de Usuario">
         <br>
         <input type="password" name="password" id="" placeholder="Contraseña">
-        <br>
-        <button type="submit">Iniciar Sesion</button>
+        <br>-->
+        <div class="card mx-auto" style="width: 40rem;">
+            <div class="card-header">
+                Login
+            </div>
+            <div class="card-body">
+                    {{ form|crispy}}
+                <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+            </div>
+        </div>
+        
     </form>
 {% endblock %}
