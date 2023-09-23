@@ -1,22 +1,40 @@
 {% extends "./base.html" %}
 {%block title %}Gestion de Operaciones{% endblock %}
 
+{% block css_page %}
+<link href="cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+{% endblock %}
+
 {% block body %}
 <div class="row">
-    <div class="container">
-        <nav class="navbar navbar-dark bg-dark">
-            <form class="container-fluid justify-content-start">
-              <a class="btn btn-outline-success me-2" href="/cargarServicio/">Nuevo</a>
-              <a class="btn btn-outline-success me-2" href="#">Otra</a>
-            </form>
-          </nav>
+    <div class="col col-lg-2 bg-secondary"> <!--Menu Izquierda-->
+            <h5>Operaciones</h5>
+            <hr>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><a class="btn btn-outline-success me-2" href="/crearServicio/">Nuevo</a></li>
+              <li class="list-group-item ">Opc 2</li>
+              <li class="list-group-item">Opc 3</li>
+              <hr>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                <label class="form-check-label" for="inlineRadio1">Todos</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">Asignados</label>
+              </div>
+            </ul>
+        
+    </div>
+    <div class="col-10">
+        
         <div class="col-sm-12">
-        <h2>Programacion</h2>
         <div class="table-responsive py-2">
-            <table class="table table-responsive">
+           <!-- <table class="table table-responsive text-capitalize "-->
+            <table id="example" class="display fs-6" style="width:100%" >
                 <thead>
                     <tr>
-                        <th>#</th>
+                       
                         <th>ID</th>
                         <th>Fecha</th>
                         <th>Hora</th>
@@ -33,9 +51,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for s in operaciones %}
+                    {% if object_list %}
+                    {% for s in object_list %}
                         <tr>
-                            <td>{{forloop.counter}}</td>
+                            
                             <td>{{s.id}}</td>
                             <td>{{s.fecha}}</td>
                             <td>{{s.hora}}</td>
@@ -47,12 +66,32 @@
                             <td>{{s.origen}}</td>
                             <td>{{s.destino}}</td>
                             <td>{{s.usuarios}}</td>
-                            <td>{{s.estado}}</td>
-                            <td><a href="/enviarServicio/{{s.id}}" class="btn btn-info">Enviar</a></td>
-                            <td><a href="/edicionServicio/{{s.id}}" class="btn btn-danger btnEliminar">Editar</a></td>
-                            <td><a href="/enviarServicio/{{s.id}}" class="btn btn-danger btnEliminar">Cancelar</a></td>
+                            {% if s.estado == '0' %}
+                               <td> <a href="#" class="btn btn-success btn-circle btn-sm">
+                                        <i class="fas fa-check">
+                                        
+                                        </i>
+                                    </a>
+                                </td>
+                            {% elif s.estado == '1' %}
+                            <td> <a href="#" class="btn btn-success btn-circle btn-sm">
+                                <i class="fas fa-check">
+                                    
+                                </i>
+                            </a>
+                        </td>
+                            {% elif s.estado == '2' %}
+                                <td>'2 ok'</td>
+                            {% endif %}
+                            
+                            <td><a href="/enviarServicio/{{s.id}}" class="btn btn-info btnEnviar">Enviar</a></td>
+                            <td><a href="/edicionServicios/{{s.id}}" class="btn btn-danger btnEditar">Editar</a></td>
+                            <td><a href="/cancelarServicio/{{s.id}}" class="btn btn-danger btnEliminar">Cancelar</a></td>
                         </tr>
                     {% endfor %}
+                    {% else %}
+                        <h1>No hay registros de Servicios</h1>
+                    {% endif %}
                 </tbody>
             </table>
         </div>
@@ -60,4 +99,9 @@
     </div>
 </div>
 
+{% endblock %}
+{% block js_page %}
+    <script src="static/creaServicios.js'"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 {% endblock %}

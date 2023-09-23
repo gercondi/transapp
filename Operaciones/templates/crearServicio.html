@@ -2,24 +2,25 @@
 
 {% block title %}Nuevo Servicio{% endblock %}
 
+{% block css_page %}
+{% endblock %}
+
 {% block body %}
     <div class="row">
-        <div class="container">
+        <div class="container-fluit">
             <h2>Crear Servicio</h2>
             <div class="card">
                <div class="card-body"> 
-                    <form class="row g-3" action="/crearServicio/" method="POST">{% csrf_token %}
+                    <form class="row" action="/crearServicio/" method="POST">{% csrf_token %}
                         
                             <div class="col-md-6">
                                 <label for="inputEmail4" class="form-label">Fecha</label>
-                                <input type="text" id="txtfecha" name="txtfecha" class="form-control mt-2" placeholder="Fecha" 
-                                    minlength="1" maxlength="50" required>
-                              </div>
-                              <div class="col-md-6">
+                                <input type="date" id="dtfecha" name="txtfecha" class="form-control mt-2" required>
+
+                            <div class="col-md-6">
                                 <label for="inputPassword4" class="form-label">Hora</label>
-                                <input type="text" id="txthora" name="txthora" class="form-control mt-2" placeholder="zona" 
-                                minlength="1" maxlength="50" required>
-                              </div>
+                                <input type="time" id="txthora" name="txthora" class="form-control mt-2" required>
+                            </div>
 
                             <!-- Carga los tipos de Servicios, del diccionario creado en model -->
                             <div class="input-group mb-2">
@@ -47,7 +48,7 @@
 
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="inputGroupSelect01">Zona</label>
-                                <select class="form-select" id="idCliente" name="idCliente" required>
+                                <select class="form-select" id="idZona" name="idZona" required>
                                     <option selected>Seleccione...</option>
                                     {% for z in zonas %}
                                         <option value="{{ z.id }}">{{ z.zona }}</option>
@@ -82,11 +83,13 @@
                                     minlength="1" maxlength="50"  required>
                             <input type="text" id="txtusuarios" name="txtusuarios" class="form-control mt-2" placeholder="usuarios" 
                                     minlength="1" maxlength="50"  required>
-                            <input type="text" id="txtestado" name="txtestado" class="form-control mt-2" placeholder="estado" 
+                            <input type="text" id="txtComentrio" name="txtComentrio" class="form-control mt-2 p-6" placeholder="Observaciones del Servicio" 
                                     minlength="1" maxlength="50"  required>
+                            
                         
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-block text-white mt-3">Guardar</button>
+                            <button type="submit" class="btn btn-success">Guardar</button>
+                            <button type="reset" class="btn btn-danger">Cancelar</button>
                         </div>
                     </form>
                 </div>

@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
+    'crispy_bootstrap5',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,12 +43,18 @@ INSTALLED_APPS = [
     'Operaciones'
 ]
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    
+    'Operaciones.middleware.AsignarEmpresaMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -81,7 +89,7 @@ DATABASES = {
         # 'NAME': 'Trnsporte.db',
         
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'trlapp',
+            'NAME': 'transapp2',
             'USER': 'root',
             'PASSWORD': '123456',
             'HOST': 'localhost',
@@ -133,5 +141,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # variables de entorno para redirect login y logout
-LOGIN_REDIRECT_URL = 'django.contrib.auth.views.login'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/inicio'

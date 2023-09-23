@@ -2,35 +2,10 @@
 {%block title %}Gestion de Clientes{% endblock %}
 
 {% block body %}
-<div class="row">
-    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-dismissible alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong class="text-dark">{{message}}</strong>
-                </div>
-            {% endfor %}
-        {% endif%}
-        <h2>Gestion de Clientes</h2>
-        <div class="card">
-            <div class="card-body">
-                <form action="/crearZona/" method="POST">{% csrf_token %}
-                    <div class="form-group">
-                        <input type="text" id="txtid" name="txtid" class="form-control" placeholder="Id" 
-                                minlength="1" maxlength="5" required>
-                        <input type="text" id="txtzona" name="txtzona" class="form-control mt-2" placeholder="Cliente" 
-                                minlength="1" maxlength="50" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-block text-white">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div>
 
-        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+<div class="row">
+    <a href="/crearZona/" class="btn btn-danger btnEliminar">Nueva</a>
+        <div class="table-responsive py-2">
         <h2>Listado de Zonas</h2>
         <div class="table-responsive py-2">
             <table class="table table-striped">
@@ -43,15 +18,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for z in zonas %}
-                        <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td>{{z.id}}</td>
-                            <td>{{z.zona}}</td>
-                            <td><a href="/edicionZona/{{z.id}}" class="btn btn-info">Editar</a></td>
-                            <td><a href="/eliminarZona/{{z.id}}" class="btn btn-danger btnEliminar">Eliminar</a></td>
-                        </tr>
-                    {% endfor %}
+                    {% if object_list %}
+                        {% for z in object_list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{z.id}}</td>
+                                <td>{{z.zona}}</td>
+                                <td><a href="/edicionZona/{{z.id}}" class="btn btn-info">Editar</a></td>
+                                <td><a href="/eliminarZona/{{z.id}}" class="btn btn-danger btnEliminar">Eliminar</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <h1>No hay Zonas creadas</h1>
+                    {% endif %}
                 </tbody>
             </table>
         </div>

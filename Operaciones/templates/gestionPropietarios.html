@@ -1,0 +1,44 @@
+{% extends "./base.html" %}
+{%block title %}Gestion de Proveedores{% endblock %}
+
+{% block body %}
+<div class="row">
+        <a href="/crearPropietario/" class="btn btn-danger">Nuevo Proveedor</a>
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>Listado de Proveedores</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th colspan="">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if object_list %}
+                        {% for e in object_list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{e.nit}}</td>
+                                <td>{{e.nombre}}</td>
+                                <td>{{e.email}}</td>
+                                <td>{{e.telefono}}</td>
+                                <td><a href="/edicionPropietario/{{e.id}}" class="btn btn-info">Editar</a></td>
+                                <td><a href="/eliminarPropietario/{{e.id}}" class="btn btn-danger btnEliminar">Eliminar</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                            <h1>No existen Proveedores </h1>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

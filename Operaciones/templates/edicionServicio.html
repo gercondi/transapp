@@ -1,0 +1,15 @@
+{% extends "./base.html" %}
+
+{% block title %}Nuevo Servicio{% endblock %}
+
+{% block css_page %}
+{% endblock %}
+
+{% block body %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="form-control">Guardar</button>
+    </form>
+    
+{% endblock %}

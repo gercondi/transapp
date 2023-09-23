@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 class Empresa(models.Model):
-    id=models.PositiveIntegerField(null=False, primary_key=True)
     nombre=models.CharField(max_length=60, null=False)
     nit=models.CharField(max_length=20,null=False)
     email=models.EmailField()
@@ -20,7 +19,6 @@ class Empresa(models.Model):
         return texto.format(self.nombre,self.email,self.nit, self.telefono)
 
 class UsuarioEmpresa(models.Model):
-    id=models.PositiveSmallIntegerField(primary_key=True)
     empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
     username=models.CharField(max_length=150, null=False)
     def __str__(self):
@@ -30,7 +28,6 @@ class UsuarioEmpresa(models.Model):
 
 class Zona(models.Model):
     empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
-    id_zona=models.PositiveSmallIntegerField(primary_key=True, null=False)
     zona=models.CharField(max_length=15, null=False)
     
     def __str__(self):
@@ -38,8 +35,8 @@ class Zona(models.Model):
         return texto.format(self.zona)
 
 class Clientes(models.Model):
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    nit=models.PositiveIntegerField(primary_key=True, null=False)
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    nit=models.CharField(max_length=20, null=False)
     nombre=models.CharField(max_length=60, null=False)
     email=models.EmailField()
     contacto=models.CharField(max_length=100) #Persona de contacto
@@ -49,12 +46,11 @@ class Clientes(models.Model):
     usuariocrea=models.CharField(max_length=10, default='')
 
     def __str__(self):
-        texto = "{0}, {1}"
-        return texto.format(self.nit, self.nombre)
+        texto = "{0}"
+        return texto.format(self.nombre)
 
 class TiposCar(models.Model):
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    id=models.PositiveIntegerField(primary_key=True)
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
     tipo_carro=models.CharField(max_length=50, null=False)
     observacion=models.CharField(max_length=200)
     fechacrea=models.DateField(auto_now_add=True)
@@ -62,14 +58,13 @@ class TiposCar(models.Model):
     usuariocrea=models.CharField(max_length=10, default='')
 
     def __str__(self) :
-        texto= "{0}, {1}"
-        return texto.format(self.tipo_carro, self.observacion)      
+        texto= "{0}"
+        return texto.format(self.tipo_carro)      
 
 class Tarifa(models.Model):
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    codigo=models.PositiveSmallIntegerField(primary_key=True)
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    codigo=models.AutoField(primary_key=True)
     Cliente=models.ForeignKey(Clientes, on_delete=models.CASCADE, default=1)
-    #zona=models.CharField(max_length=50)
     zona=models.ForeignKey(Zona, on_delete=models.CASCADE)
     origendestino=models.CharField(max_length=200, null=True ,default='') # almacena la informacion de lugar de origen o destino del servicio para calcular la tarifa
     tipo_carro=models.ForeignKey(TiposCar,on_delete=models.CASCADE)
@@ -79,14 +74,14 @@ class Tarifa(models.Model):
     fechacrea=models.DateField(auto_now_add=True)
     fechaupdate=models.DateField(auto_now=True)
     usuariocrea=models.CharField(max_length=10, default='')
-
+    estado=models.BooleanField(default=1)
     def __str__(self):
         texto = "{0}, {1}, {2}"
         return texto.format(self.Cliente, self.zona, self.tipo_carro)
     
 class Propietarios(models.Model):
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    id_propietario=models.PositiveSmallIntegerField(primary_key=True, null=False)
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    nit=models.CharField(max_length=20, null=False, default=1)
     nombre=models.CharField(max_length=60, null=False)
     email=models.EmailField()
     telefono=models.CharField(max_length=20)
@@ -95,12 +90,12 @@ class Propietarios(models.Model):
     usuariocrea=models.CharField(max_length=10,default='')
 
     def __str__(self):
-        texto = "{0}, {1}"
-        return texto.format(self.id_propietario, self.nombre)
+        texto = "{0}"
+        return texto.format(self.nombre)
 
 class Conductores(models.Model):
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    cedula=models.PositiveIntegerField(primary_key=True, null=False)
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    cedula=models.CharField(max_length=20, null=False)
     nombre=models.CharField(max_length=60, null=False)
     email=models.EmailField()
     telefono=models.CharField(max_length=20)
@@ -109,14 +104,14 @@ class Conductores(models.Model):
     usuariocrea=models.CharField(max_length=10, default='')
 
     def __str__(self):
-        texto = "{0}, {1}"
-        return texto.format(self.cedula, self.nombre)
+        texto = "{0}"
+        return texto.format(self.nombre)
 
   
     
 class Placas(models.Model):
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    placa=models.CharField(max_length=6, null=False, primary_key=True)
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    placa=models.CharField(max_length=6, null=False)
     tipo_carro=models.ForeignKey(TiposCar, on_delete=models.CASCADE)
     capacidad=models.PositiveSmallIntegerField(default=4, null=False)
     id_propietario=models.ForeignKey(Propietarios, on_delete=models.CASCADE)
@@ -131,22 +126,22 @@ class Placas(models.Model):
 
 class Operaciones(models.Model):
     opc_SERVICIOS=(
-        (0, 'ENTRADA'),
-        (1, 'SALIDA'),
-        (2, 'OTROS')
+        ('0', 'ENTRADA'),
+        ('1', 'SALIDA'),
+        ('2', 'OTROS')
     )
     opc_ESTADOS=(
-        (0,'PENDIENTE'),
-        (1,'ASIGNADO'),
-        (2,'EJECUTADO'),
-        (3,'CANCELADO')
+        ('0','PENDIENTE'),
+        ('1','ASIGNADO'),
+        ('2','EJECUTADO'),
+        ('3','CANCELADO')
     )
-    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE, default=0)
-    id=models.PositiveIntegerField(primary_key=True, null=False)
+    empresa=models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    #id=models.AutoField(primary_key=True, null=False)
     fecha=models.DateField()
-    hora=models.DateTimeField(null=False)
+    hora=models.TimeField(null=False)
     tipo_servicio=models.CharField(choices=opc_SERVICIOS, max_length=50)
-    estado=models.CharField(choices=opc_ESTADOS,max_length=20, default='PENDIENTE')
+    estado=models.CharField(choices=opc_ESTADOS,max_length=20, default='0')
     placa=models.ForeignKey(Placas, on_delete=models.CASCADE)
     cliente=models.ForeignKey(Clientes, on_delete=models.CASCADE)
     origen=models.CharField(max_length=200)

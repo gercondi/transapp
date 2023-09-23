@@ -1,0 +1,40 @@
+{% extends "./base.html" %}
+{%block title %}Gestion de Tipos de Vehiculo{% endblock %}
+
+{% block body %}
+<div class="row">
+    <a href="/crearTiposcar/" class="btn btn-danger">Nuevo Tipo de Vehiculo</a>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>Listado de Tipos de Vehiculos</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tipo de Vehiculo</th>
+                        <th>Observacion</th>
+                        <th colspan="">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if object_list %}
+                        {% for c in object_list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{c.tipo_carro}}</td>
+                                <td>{{c.observacion}}</td>
+                                <td><a href="/edicionTiposcar/{{c.id}}" class="btn btn-info">Editar</a></td>
+                                <td><a href="/eliminarTiposcar/{{c.id}}" class="btn btn-danger btnEliminar">Eliminar</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                            <h2>No hay Tipos de Carro creados!!</h2>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

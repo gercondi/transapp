@@ -1,0 +1,46 @@
+{% extends "./base.html" %}
+{%block title %}Gestion de Placas{% endblock %}
+
+{% block body %}
+<div class="row">
+        <a href="/crearPlaca/" class="btn btn-danger">Nueva Placa</a>
+        <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h2>Listado de Placas</h2>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Placa</th>
+                        <th>Propietario</th>
+                        <th>Conductor</th>
+                        <th>Tipo</th>
+                        <th>Capacidad</th>
+                        <th colspan="">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if object_list %}
+                        {% for e in object_list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{e.placa}}</td>
+                                <td>{{e.id_propietario}}</td>
+                                <td>{{e.conductor}}</td>
+                                <td>{{e.tipo_carro}}</td>
+                                <td>{{e.capacidad}}</td>
+                                <td><a href="/edicionPlaca/{{e.id}}" class="btn btn-info">Editar</a></td>
+                                <td><a href="/eliminarPlaca/{{e.id}}" class="btn btn-danger btnEliminar">Eliminar</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                            <h1>No existen Placas Creadas para la empresa </h1>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

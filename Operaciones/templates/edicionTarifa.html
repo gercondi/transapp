@@ -3,34 +3,9 @@
 {% block title %}Editar Tarifa{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-4 offset-md-4">
-            <h2>Edicion de Tarifas</h2>
-            <div class="card">
-                <div class="card-body">
-                    <form action="/editarTarifa/1" method="POST">{% csrf_token %}
-                        <div class="form-group">
-                            <input type="text" id="txtcodigo" name="txtcodigo" value={{tarifa.codigo}} class="form-control mt-2" placeholder="codigo" 
-                                    minlength="1" maxlength="5" readonly required>
-                            <input type="text" id="txtcliente" name="txtcliente" value={{tarifa.Cliente}} class="form-control mt-2" placeholder="cliente" 
-                                    minlength="1" maxlength="50" required>
-                            <input type="text" id="txtzona" name="txtzona" value={{tarifa.zona}} class="form-control mt-2" placeholder="zona" 
-                                    minlength="1" maxlength="50" required>
-                            <input type="text" id="txttipo_carro" name="txttipo_carro" value={{tarifa.tipo_carro}} class="form-control mt-2" placeholder="tipo_carro" 
-                                    minlength="2" maxlength="50" required>
-                            <input type="text" id="txtcobrar" name="txtcobrar" value={{tarifa.valor_cobrar}} class="form-control mt-2" placeholder="valor_cobrar" 
-                                    min="1" max="1000000" value="1" required>
-                            <input type="text" id="txtpagar" name="txtpagar" value={{tarifa.valor_pagar}} class="form-control mt-2" placeholder="valor_pagar" 
-                                    min="1" max="1000000" value="1" required>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-block text-white mt-3">Guardar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+   <form method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type="submit" class="form-control">Guardar</button>
+   </form>
 {% endblock %}
